@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: doctor-appointment
+    env: node
+    buildCommand: npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8001
+      - key: JWT_SECRET
+        value: bookadr_super_secret_jwt_key_2024
+      - key: MONGO_URI
+        placeholder: "Enter your MongoDB connection string (e.g. MongoDB Atlas URI)"
