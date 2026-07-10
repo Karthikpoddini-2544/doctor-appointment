@@ -24,10 +24,18 @@ app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/doctor", require("./routes/doctorRoutes"));
 app.use("/api/appointment", require("./routes/appointmentRoutes"));
 
-// Health check
-app.get("/", (req, res) => {
-  res.json({ message: "Book a Doctor API is running!", success: true });
-});
+// Serve static assets in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  });
+} else {
+  // Health check
+  app.get("/", (req, res) => {
+    res.json({ message: "Book a Doctor API is running!", success: true });
+  });
+}
 
 const PORT = process.env.PORT || 8001;
 app.listen(PORT, () => {
